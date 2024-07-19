@@ -49,10 +49,12 @@ class Lox():
         for token in tokens:
             print(token)
 
-    def error(self, line: int, message: str):
-        self.report(line, "", message)
+    @staticmethod
+    def error(line: int, message: str):
+        Lox.report(line, "", message)
 
-    def report(self, line: int, where: str, message: str):
+    @staticmethod
+    def report(line: int, where: str, message: str):
         raise NameError("[line " + str(line) + "] Error" +
                         where + ": " + message)
         had_error = True
