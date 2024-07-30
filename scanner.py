@@ -199,10 +199,10 @@ class Scanner:
             (c >= "A" and c <= "Z") or c == "_"
 
     def is_alpha_numeric(self, c: str):
-        return self.is_alpha(c) and self.is_digit(c)
+        return self.is_alpha(c) or self.is_digit(c)
 
 
 if __name__ == "__main__":
-    s = Scanner("test")
-    s.tokens.append(Token(TokenType.FALSE, "false", False, 2))
+    s = Scanner("class hello { (1+2) }")
+    s.scan_tokens()
     print([t.__str__() for t in s.tokens])
