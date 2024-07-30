@@ -85,7 +85,7 @@ class Scanner:
             case "/":
                 if self.match("/"):
                     # A comment goes until the end of the line
-                    while self.peek() is not "\n" and not self.is_at_end():
+                    while self.peek() != "\n" and not self.is_at_end():
                         self.advance()
                 else:
                     self.add_token(TokenType.SLASH)
@@ -148,7 +148,7 @@ class Scanner:
         self.tokens.append(Token(type, text, literal, self._line))
 
     def string(self):
-        while self.peek() is not '"' and not self.is_at_end():
+        while self.peek() != '"' and not self.is_at_end():
             if self.peek() == "\n":
                 self.line = self.line + 1
                 self.advance()
