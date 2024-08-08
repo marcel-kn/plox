@@ -12,17 +12,22 @@ def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]
     path = output_dir + "/" + file_name + ".py"
 
     file = open(path, "w")
-
+    file.write("from abc import ABC, abstractmethod\n\n")
     file.write("from ltoken import Token\n\n")
 
     file.write("class " + base_name + ":\n")
     file.write("\t")
     file.write("pass\n")
 
+    define_visitor(file, base_name, types)
+
+    # The AST classes.
     for type in types:
         class_name = type.split(":")[0].strip()
         fields = type.split(":")[1].strip()
         define_type(file, base_name, class_name, fields)
+
+    file.write("\ndef accept(visitor: Visitor):\n\tpass\n")
 
     file.close()
 
@@ -48,7 +53,18 @@ def define_type(file: TextIOWrapper, base_name, class_name, field_list: str):
         file.write("\t\tself." + name + " = " + name + "\n")
 
 
-define_ast(output_dir, "lx_ast", "Expr",
+def define_visitor(file: TextIOWrapper, base_name, types: list[str]):
+
+    file.write("\nclass Visitor(ABC):\n")
+
+    for type in types:
+        type_name = type.split(":")[0].strip()
+        file.write("\t@abstractmethod\n")
+        file.write("\tdef visit_" + type_name +
+                   "(self, " + base_name.lower() + ": " + '"' + type_name + '"' + "):\n\t\tpass\n\n")
+
+
+define_ast(output_dir, "lxast", "Expr",
            ["Binary   : Expr left, Token operator, Expr right",
             "Grouping : Expr expression",
             "Literal  : Object value",
