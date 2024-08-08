@@ -27,7 +27,7 @@ def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]
         fields = type.split(":")[1].strip()
         define_type(file, base_name, class_name, fields)
 
-    file.write("\ndef accept(visitor: Visitor):\n\tpass\n")
+        file.write("\n\tdef accept(self, visitor: Visitor):\n\t\tpass\n")
 
     file.close()
 

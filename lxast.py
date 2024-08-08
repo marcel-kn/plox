@@ -29,18 +29,27 @@ class Binary(Expr):
 		self.operator = operator
 		self.right = right
 
+	def accept(self, visitor: Visitor):
+		pass
+
 class Grouping(Expr):
 	def __init__(self, expression: Expr):
 		self.expression = expression
 
+	def accept(self, visitor: Visitor):
+		pass
+
 class Literal(Expr):
 	def __init__(self, value):
 		self.value = value
+
+	def accept(self, visitor: Visitor):
+		pass
 
 class Unary(Expr):
 	def __init__(self, operator: Token, right: Expr):
 		self.operator = operator
 		self.right = right
 
-def accept(visitor: Visitor):
-	pass
+	def accept(self, visitor: Visitor):
+		pass
