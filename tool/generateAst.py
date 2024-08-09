@@ -19,9 +19,11 @@ def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]
     file.write("from abc import ABC, abstractmethod\n\n")
     file.write("from ltoken import Token\n\n")
 
-    file.write("class " + base_name + ":\n")
-    file.write("\t")
-    file.write("pass\n")
+    file.write("class " + base_name + "(ABC):\n")
+    # Base accept method
+    file.write("\t@abstractmethod\n")
+    file.write("\tdef accept(self, visitor: \"Visitor\"):\n")
+    file.write("\t\tpass\n")
 
     define_visitor(file, base_name, types)
 
@@ -38,6 +40,7 @@ def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]
 
 def define_type(file: TextIOWrapper, base_name, class_name, field_list: str):
     file.write("\nclass " + class_name + "(" + base_name + "):\n")
+
     # Constructor
     fields: list[str] = field_list.split(", ")
     params_string = ""

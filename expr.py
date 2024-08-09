@@ -2,8 +2,10 @@ from abc import ABC, abstractmethod
 
 from ltoken import Token
 
-class Expr:
-	pass
+class Expr(ABC):
+	@abstractmethod
+	def accept(self, visitor: "Visitor"):
+		pass
 
 class Visitor(ABC):
 	@abstractmethod
