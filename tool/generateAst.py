@@ -9,6 +9,10 @@ output_dir = sys.argv[1]
 
 
 def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]):
+    """
+    Generate a .py file
+    containing the description of the AST
+    """
     path = output_dir + "/" + file_name + ".py"
 
     file = open(path, "w")
@@ -64,7 +68,7 @@ def define_visitor(file: TextIOWrapper, base_name, types: list[str]):
                    "(self, " + base_name.lower() + ": " + '"' + type_name + '"' + "):\n\t\tpass\n\n")
 
 
-define_ast(output_dir, "lxast", "Expr",
+define_ast(output_dir, "expr", "Expr",
            ["Binary   : Expr left, Token operator, Expr right",
             "Grouping : Expr expression",
             "Literal  : Object value",
