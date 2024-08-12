@@ -33,7 +33,9 @@ def define_ast(output_dir: str, file_name: str, base_name: str, types: list[str]
         fields = type.split(":")[1].strip()
         define_type(file, base_name, class_name, fields)
 
-        file.write("\n\tdef accept(self, visitor: Visitor):\n\t\tpass\n")
+        file.write("\n\tdef accept(self, visitor: Visitor):\n")
+        file.write("\t\treturn visitor.visit_" +
+                   class_name.lower() + "_" + base_name.lower() + "(self)\n")
 
     file.close()
 
@@ -67,7 +69,7 @@ def define_visitor(file: TextIOWrapper, base_name, types: list[str]):
     for type in types:
         type_name = type.split(":")[0].strip()
         file.write("\t@abstractmethod\n")
-        file.write("\tdef visit_" + type_name +
+        file.write("\tdef visit_" + type_name.lower() + "_" + base_name.lower() +
                    "(self, " + base_name.lower() + ": " + '"' + type_name + '"' + "):\n\t\tpass\n\n")
 
 
